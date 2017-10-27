@@ -340,9 +340,8 @@ public class BluetoothPrinter extends CordovaPlugin {
             Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
 
             bitmap = decodedBitmap;
-
- 			this.initCanvas(384);
 			this.initPaint();
+ 			this.initCanvas(msg);
 			this.drawImage(0.0f,0.0f,bitmap);
 
             byte[]  bt =getBitmapData(bitmap);
@@ -374,7 +373,6 @@ public class BluetoothPrinter extends CordovaPlugin {
 
                 bitmap = decodedBitmap;
 
-     			this.initCanvas(384);
     			this.initPaint();
     			this.drawImage(0.0f,0.0f,bitmap);
 
@@ -567,33 +565,44 @@ public class BluetoothPrinter extends CordovaPlugin {
 
 
 
-	public void initCanvas(int w) {
-		int h = 10 * w;
-		this.bm = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);
-		this.canvas = new Canvas(this.bm);
-		this.canvas.drawColor(-1);
-		this.width = w;
-		this.bitbuf = new byte[this.width / 8];
-	}
+	public void initCanvas(String msg) {
+        int w = 400;
+        int h = 400;
+        this.bm = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);
+        this.canvas = new Canvas(this.bm);
+        Paint paint = new Paint();
+        canvas.drawColor(Color.WHITE);
 
-	public void initPaint() {
-		this.paint = new Paint();
-		this.paint.setAntiAlias(true);
-		this.paint.setColor(-16777216);
-		this.paint.setStyle(Paint.Style.STROKE);
-	}
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(3);
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(270);
+        canvas.drawText(msg, 40, 220, paint);
 
-	public void drawImage(float x, float y, Bitmap bitmap) {
-		try {
-			this.canvas.drawBitmap(bitmap, x, y, (Paint)null);
-			if (this.length < ((float) bitmap.getHeight()) + y) {
-				this.length = (((float) bitmap.getHeight()) + y) - 20.0f;
-			}
-		} catch (Exception var5) {
-			var5.printStackTrace();
-		}
+//        this.canvas.drawText("1",0,0,paint);
+//        this.canvas.drawColor(123);
+        this.width = w;
+        this.bitbuf = new byte[this.width / 8];
+    }
 
-	}
+    public void initPaint() {
+        this.paint = new Paint();
+        this.paint.setAntiAlias(true);
+        this.paint.setColor(getResources().getColor(R.color.black));
+        this.paint.setStyle(Paint.Style.STROKE);
+    }
+
+    public void drawImage(float x, float y, Bitmap bitmap) {
+        try {
+            this.canvas.drawBitmap(bm, x, y, (Paint)null);
+            if (this.length < ((float) bm.getHeight()) + y) {
+                this.length = (((float) bm.getHeight()) + y) - 20.0f;
+            }
+        } catch (Exception var5) {
+            var5.printStackTrace();
+        }
+
+    }
 
 
 
