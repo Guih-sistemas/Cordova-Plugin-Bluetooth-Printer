@@ -588,7 +588,7 @@ public class BluetoothPrinter extends CordovaPlugin {
     public void initPaint() {
         this.paint = new Paint();
         this.paint.setAntiAlias(true);
-        this.paint.setColor(getResources().getColor(R.color.black));
+        this.paint.setColor(getResources().getColor(Color.BLACK));
         this.paint.setStyle(Paint.Style.STROKE);
     }
 
